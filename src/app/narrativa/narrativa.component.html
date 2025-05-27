@@ -1,0 +1,59 @@
+<main>
+    <div class="position-relative">
+        <section class="header bg-gradient-default pb-8 pt-5 pt-md-8">
+            <div class="container d-flex align-items-center ">
+                <div class="col px-0">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-6 text-center" *ngIf="isNarrativaPadrao()">
+                            <p class="text-white h1">Central de Historias</p>
+                            <p class="lead text-white">Escolha uma das aventuras para come�ar</p>
+                        </div>
+                        <div class="col-lg-6 text-center" *ngIf="!isNarrativaPadrao()">
+                            <p class="text-white h1">{{narrativaPai.titulo}}</p>
+                            <p class="lead text-white">{{narrativaPai.descricao}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <ng-template #content let-offcanvas>
+            <div class="offcanvas-header">
+                <h4 class="offcanvas-title">Nova Ramificacao</h4>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="offcanvas.dismiss('Cross click')"></button>
+            </div>
+
+            <div class="offcanvas-body p-3">
+                <form #meuForm="ngForm" (ngSubmit)="postar(meuForm.value)">
+                    <div class="form-group">
+                        <label>Titulo da Resposta:</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="..." ngModel
+                            #formTema="ngModel" required name="Titulo" maxlength="13">
+                    </div>
+                    <div class="form-group">
+                        <label>Resumo</label>
+                        <small id="emailHelp" class="form-text text-muted">Descreva de uma forma breve do que se trata a
+                            narrativa.</small>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="..."
+                            ngModel #formResumoAula="ngModel" required name="Descricao" maxlength="75" [(ngModel)]="campoTextArea"></textarea>
+                        <mat-hint align="end">{{campoTextArea.length}}/75</mat-hint>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </ng-template>
+
+        <div class="container justify-content-center d-flex p-3">
+            <div class="d-block">
+                <div class=" text-center">
+                    <button class="btn btn-lg btn-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="ResetarAventura()">Resetar Aventura</button>
+                    <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="openEnd(content)">Registrar nova Ramificação</button>
+                </div>
+                <div class="card-container">
+                    <app-card-narrativa class="card m-3" *ngFor="let narrativaout of narrativas" (click)="carregarNarrativa(narrativaout)" [narrativa]="narrativaout"></app-card-narrativa>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
