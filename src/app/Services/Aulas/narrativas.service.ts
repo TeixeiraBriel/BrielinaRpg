@@ -10,7 +10,7 @@ import { DadosBase } from 'src/app/Interfaces/DadosBase';
   providedIn: 'root'
 })
 export class NarrativasService {
-  private apiUrl = "https://localhost:7002/api/RPG";
+  private apiUrl = "https://brielinaapi.onrender.com/BrielinaRpg";
 
   constructor(private http:HttpClient) { }
 
