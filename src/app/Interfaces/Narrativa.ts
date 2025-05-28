@@ -4,5 +4,6 @@ export interface Narrativa {
     descricao: string,
     texto: string,
     ramificacoes: string,
-    tipo: number
+    tipo: number,
+    autor:string
 }

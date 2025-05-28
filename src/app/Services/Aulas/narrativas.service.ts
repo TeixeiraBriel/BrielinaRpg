@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { Narrativa } from 'src/app/Interfaces/Narrativa';
-import { DadosBase } from 'src/app/Interfaces/DadosBase';
 
 @Injectable({
   providedIn: 'root'

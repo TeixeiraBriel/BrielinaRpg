@@ -4,7 +4,7 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { firstValueFrom } from 'rxjs';
 import { Narrativa } from '../Interfaces/Narrativa';
 import { NarrativasService } from '../Services/Aulas/narrativas.service';
-import { DadosBase } from '../Interfaces/DadosBase';
+import { AuthService } from '../Services/Auth/auth.service';
 
 @Component({
   selector: 'app-narrativa',
@@ -18,7 +18,8 @@ export class NarrativaComponent {
     descricao: "",
     texto: "",
     ramificacoes: "",
-    tipo: 0
+    tipo: 0,
+    autor:""
   };
   narrativaNova: Narrativa = {
     idNarrativas: 0,
@@ -26,14 +27,15 @@ export class NarrativaComponent {
     descricao: "",
     texto: "",
     ramificacoes: "",
-    tipo: 0
+    tipo: 0,
+    autor:""
   };
   campoTextArea:string = "";
   campoTitulo:string = "";
   campoNarrativa:string = "";
   narrativas: Narrativa[] = [];
 
-  constructor(private offcanvasService: NgbOffcanvas, private listService: NarrativasService ) {
+  constructor(private offcanvasService: NgbOffcanvas, private listService: NarrativasService, private authService: AuthService ) {
     this.ResetarAventura();
   }
 
@@ -51,6 +53,7 @@ export class NarrativaComponent {
     this.narrativaNova.titulo = dados.Titulo;
     this.narrativaNova.descricao = dados.Descricao;
     this.narrativaNova.texto = dados.campoNarrativa;
+    this.narrativaNova.autor = this.authService.obterNomeUsuario()!;
     const retorno = await firstValueFrom(await this.listService.Create(this.narrativaNova));
     this.getAll();
     this.offcanvasService.dismiss();
@@ -72,7 +75,8 @@ export class NarrativaComponent {
       descricao: "",
       texto: "",
       ramificacoes: "",
-      tipo: 0
+      tipo: 0,
+      autor:""
     };
     this.narrativaNova = {
       idNarrativas: 0,
@@ -80,7 +84,8 @@ export class NarrativaComponent {
       descricao: "",
       texto: "",
       ramificacoes: "",
-      tipo: 0
+      tipo: 0,
+      autor:""
     };
     this.getAll();
   }
