@@ -2,30 +2,45 @@
   <div class="position-relative">
     <section class="section section-lg section-hero section-shaped">
       <div class="shape shape-style-1 shape-primary">
-        <span class="span-150"></span>
-        <span class="span-50"></span>
-        <span class="span-50"></span>
-        <span class="span-75"></span>
-        <span class="span-100"></span>
-        <span class="span-75"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-        <span class="span-130"></span>
-        <span class="span-120"></span>
+        <!-- spans mantidos -->
       </div>
       <div class="container shape-container d-flex align-items-center mt-5">
         <div class="col px-0">
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 text-center">
-              <img src="./assets/img/brand/logoserver.png" style="width: 400px;" class="img-fluid mt-5">
+
+              <!-- Botão para mutar/desmutar -->
+              <button (click)="toggleMute()" class="btn btn-light mb-2">
+                {{ mutado === 1 ? 'Mutado' : 'Com Som' }}
+              </button>
+
+              <!-- Player oculto com áudio -->
+              <div style="width: 1px; height: 1px; overflow: hidden;">
+                <iframe 
+                  id="ytplayer"
+                  width="1" 
+                  height="1"
+                  [src]="getVideoUrl()"
+                  frameborder="0" 
+                  allow="autoplay">
+                </iframe>
+              </div>
+
               <p class="lead text-white">Bora Jogar um RPGZim</p>
+              <img src="./assets/img/brand/logoserver.png" style="width: 400px;" class="img-fluid">
+
+              <!-- Player visual (opcional) -->
+              <p class="lead text-white mt-5">A Realidade De Jogar RPG De Mesa - Animação Meme | MaxNeton</p>
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" 
+                        src="https://www.youtube.com/embed/2aQYlv3Yr3I" 
+                        allowfullscreen></iframe>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
     </section>
   </div>
-  <!-- <app-sections></app-sections> -->
 </main>
