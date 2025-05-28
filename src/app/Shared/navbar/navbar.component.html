@@ -11,8 +11,9 @@
         <div class="navbar-collapse-header">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a [routerLink]="['/home']">
-                <img src="./assets/img/brand/blue.png">
+              <a class="navbar-brand mr-lg-5" [routerLink]="['/home']"
+                [ngClass]="{'text-dark': !isCollapsed}">
+                <span class="nav-link-inner--text">Inicio</span>
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -26,19 +27,29 @@
         </div>
         <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
           <li>
-            <a class="navbar-brand mr-lg-5" [routerLink]="['/Historia']">
+            <a class="navbar-brand mr-lg-5" [routerLink]="['/Historia']"
+            [ngClass]="{'text-dark': !isCollapsed}">
               <span class="nav-link-inner--text">Historia</span>
             </a>
           </li>
         </ul>
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-          <li class="nav-item d-none d-lg-block ml-lg-4">
+          <li class="nav-item d-none d-lg-block ml-lg-4" *ngIf="!authService.estaLogado()">
             <a [routerLink]="['/login']" class="btn btn-neutral btn-icon">
               <span class="btn-inner--icon">
                 <i class="fa fa-user mr-2"></i>
               </span>
               <span class="nav-link-inner--text">Logar</span>
             </a>
+          </li>
+        
+          <li class="nav-item dropdown ml-lg-4" ngbDropdown *ngIf="authService.estaLogado()">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" ngbDropdownToggle role="button">
+              {{ authService.obterNomeUsuario() }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="navbarDropdown">
+              <button class="dropdown-item" (click)="logout()">Sair</button>
+            </div>
           </li>
         </ul>
       </div>

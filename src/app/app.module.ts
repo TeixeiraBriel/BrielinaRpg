@@ -16,7 +16,6 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SectionsComponent } from './sections/sections.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DetalhamentoNarrativaComponent } from './detalhamento-narrativa/detalhamento-narrativa.component';
 import { NarrativaComponent } from './narrativa/narrativa.component';
 import { CardNarrativaComponent } from './narrativa/card-narrativa/card-narrativa.component';
 
@@ -30,7 +29,6 @@ import { CardNarrativaComponent } from './narrativa/card-narrativa/card-narrativ
     LoginComponent,
     SignupComponent,
     SectionsComponent,
-    DetalhamentoNarrativaComponent,
     NarrativaComponent,
     CardNarrativaComponent
   ],
