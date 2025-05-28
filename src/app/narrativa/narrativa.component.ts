@@ -29,6 +29,8 @@ export class NarrativaComponent {
     tipo: 0
   };
   campoTextArea:string = "";
+  campoTitulo:string = "";
+  campoNarrativa:string = "";
   narrativas: Narrativa[] = [];
 
   constructor(private offcanvasService: NgbOffcanvas, private listService: NarrativasService ) {
@@ -48,10 +50,13 @@ export class NarrativaComponent {
     this.narrativaNova.ramificacoes = this.narrativaPai.idNarrativas.toString();
     this.narrativaNova.titulo = dados.Titulo;
     this.narrativaNova.descricao = dados.Descricao;
+    this.narrativaNova.texto = dados.campoNarrativa;
     const retorno = await firstValueFrom(await this.listService.Create(this.narrativaNova));
     this.getAll();
     this.offcanvasService.dismiss();
     this.campoTextArea = "";
+    this.campoTitulo = "";
+    this.campoNarrativa = "";
   }
 
   carregarNarrativa(narrativaSelecionada: Narrativa) {

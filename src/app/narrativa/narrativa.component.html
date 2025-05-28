@@ -27,17 +27,24 @@
             <div class="offcanvas-body p-3">
                 <form #meuForm="ngForm" (ngSubmit)="postar(meuForm.value)">
                     <div class="form-group">
-                        <label>Titulo da Resposta:</label>
+                        <label>Titulo da AÁ„o:</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" placeholder="..." ngModel
-                            #formTema="ngModel" required name="Titulo" maxlength="13">
+                            #formTema="ngModel" required name="Titulo" maxlength="20"  [(ngModel)]="campoTitulo">
                     </div>
                     <div class="form-group">
                         <label>Resumo</label>
-                        <small id="emailHelp" class="form-text text-muted">Descreva de uma forma breve do que se trata a
-                            narrativa.</small>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="..."
+                        <small id="emailHelp" class="form-text text-muted">Descreva de uma forma breve do que se trata.</small>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="..."
                             ngModel #formResumoAula="ngModel" required name="Descricao" maxlength="75" [(ngModel)]="campoTextArea"></textarea>
                         <mat-hint align="end">{{campoTextArea.length}}/75</mat-hint>
+                    </div>
+                    <div class="form-group">
+                        <label>Narrativa:</label>
+                        <small id="emailHelp" class="form-text text-muted">Descreva a
+                            narrativa.</small>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="..."
+                            ngModel #formResumoAula="ngModel" required name="campoNarrativa" maxlength="500" [(ngModel)]="campoNarrativa"></textarea>
+                        <mat-hint align="end">{{campoNarrativa.length}}/500</mat-hint>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
@@ -49,6 +56,9 @@
                 <div class=" text-center">
                     <button class="btn btn-lg btn-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="ResetarAventura()">Resetar Aventura</button>
                     <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="openEnd(content)">Registrar nova Ramifica√ß√£o</button>
+                </div>
+                <div class=" text-center">
+                    <p>{{narrativaPai.texto}}</p>
                 </div>
                 <div class="card-container">
                     <app-card-narrativa class="card m-3" *ngFor="let narrativaout of narrativas" (click)="carregarNarrativa(narrativaout)" [narrativa]="narrativaout"></app-card-narrativa>
