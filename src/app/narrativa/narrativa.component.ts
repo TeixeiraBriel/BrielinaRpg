@@ -48,12 +48,12 @@ export class NarrativaComponent {
   }
 
   async postar(dados: any) {
-    console.log(dados)
     this.narrativaNova.ramificacoes = this.narrativaPai.idNarrativas.toString();
     this.narrativaNova.titulo = dados.Titulo;
     this.narrativaNova.descricao = dados.Descricao;
     this.narrativaNova.texto = dados.campoNarrativa;
-    this.narrativaNova.autor = this.authService.obterNomeUsuario()!;
+    this.narrativaNova.autor = this.authService.obterNomeUsuario() ?? "";
+    console.log(this.narrativaNova)
     const retorno = await firstValueFrom(await this.listService.Create(this.narrativaNova));
     this.getAll();
     this.offcanvasService.dismiss();

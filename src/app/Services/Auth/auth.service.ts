@@ -32,12 +32,12 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  obterNomeUsuario(): string | null {
+  obterNomeUsuario(): string{
     const token = this.obterToken();
-    if (!token) return null;
+    if (!token) return "";
 
     // Decodifica o JWT para extrair o nome do usuário
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload?.unique_name || payload?.sub || null;
+    return payload?.unique_name || payload?.sub || "";
   }
 }

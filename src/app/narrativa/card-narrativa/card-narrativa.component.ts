@@ -12,14 +12,16 @@ export class CardNarrativaComponent {
     descricao: String
     texto: String
     ramificacoes: String
-    tipo: Number
+    tipo: Number,
+    autor:string
   } = {
     idNarrativas: 0,
     titulo: "",
     descricao: "",
     texto: "",
     ramificacoes: "",
-    tipo: 0
+    tipo: 0,
+    autor:""
   };
 
   constructor() {
