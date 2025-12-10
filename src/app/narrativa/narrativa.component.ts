@@ -33,6 +33,7 @@ export class NarrativaComponent {
   campoTextArea:string = "";
   campoTitulo:string = "";
   campoNarrativa:string = "";
+  loading: boolean = false;
   narrativas: Narrativa[] = [];
 
   constructor(private offcanvasService: NgbOffcanvas, private listService: NarrativasService, private authService: AuthService ) {
@@ -44,7 +45,15 @@ export class NarrativaComponent {
 	}
 
   async getAll() {
-      this.narrativas = await firstValueFrom(this.listService.getAllChild(this.narrativaPai));
+      this.loading = true;
+      try {
+        this.narrativas = await firstValueFrom(this.listService.getAllChild(this.narrativaPai));
+      } catch (err) {
+        console.error('Erro ao buscar narrativas:', err);
+        this.narrativas = [];
+      } finally {
+        this.loading = false;
+      }
   }
 
   async postar(dados: any) {
@@ -54,8 +63,13 @@ export class NarrativaComponent {
     this.narrativaNova.texto = dados.campoNarrativa;
     this.narrativaNova.autor = this.authService.obterNomeUsuario() ?? "";
     console.log(this.narrativaNova)
-    const retorno = await firstValueFrom(await this.listService.Create(this.narrativaNova));
-    this.getAll();
+    try {
+      this.loading = true;
+      const retorno = await firstValueFrom(await this.listService.Create(this.narrativaNova));
+      await this.getAll();
+    } finally {
+      this.loading = false;
+    }
     this.offcanvasService.dismiss();
     this.campoTextArea = "";
     this.campoTitulo = "";
@@ -91,6 +105,6 @@ export class NarrativaComponent {
   }
 
   isNarrativaPadrao(): boolean {
-    return this.narrativaPai.idNarrativas === 0; // ou outra lógica que defina narrativa padrão
+    return this.narrativaPai.idNarrativas === 0; // ou outra lï¿½gica que defina narrativa padrï¿½o
   }
 }

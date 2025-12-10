@@ -1,12 +1,12 @@
 <main>
     <div class="position-relative">
-        <section class="header bg-gradient-default pb-8 pt-5 pt-md-8">
+        <section class="header bg-gradient-default-app pb-8 pt-5 pt-md-8">
             <div class="container d-flex align-items-center ">
                 <div class="col px-0">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-lg-6 text-center" *ngIf="isNarrativaPadrao()">
                             <p class="text-white h1">Central de Historias</p>
-                            <p class="lead text-white">Escolha uma das aventuras para começar</p>
+                            <p class="lead text-white">Escolha uma das aventuras para comeï¿½ar</p>
                         </div>
                         <div class="col-lg-6 text-center" *ngIf="!isNarrativaPadrao()">
                             <p class="text-white h1">{{narrativaPai.titulo}}</p>
@@ -27,7 +27,7 @@
             <div class="offcanvas-body p-3">
                 <form #meuForm="ngForm" (ngSubmit)="postar(meuForm.value)">
                     <div class="form-group">
-                        <label>Titulo da Ação:</label>
+                        <label>Titulo da Aï¿½ï¿½o:</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" placeholder="..." ngModel
                             #formTema="ngModel" required name="Titulo" maxlength="20"  [(ngModel)]="campoTitulo">
                     </div>
@@ -61,7 +61,15 @@
                     <p>{{narrativaPai.texto}}</p>
                 </div>
                 <div class="card-container">
-                    <app-card-narrativa class="card m-3" *ngFor="let narrativaout of narrativas" (click)="carregarNarrativa(narrativaout)" [narrativa]="narrativaout"></app-card-narrativa>
+                    <div *ngIf="loading" class="d-flex justify-content-center p-5">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Carregando...</span>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="!loading">
+                        <app-card-narrativa class="card m-3" *ngFor="let narrativaout of narrativas" (click)="carregarNarrativa(narrativaout)" [narrativa]="narrativaout"></app-card-narrativa>
+                        <div *ngIf="narrativas.length === 0" class="text-center text-muted p-3">Nenhuma ramificaÃ§Ã£o encontrada.</div>
+                    </ng-container>
                 </div>
             </div>
         </div>

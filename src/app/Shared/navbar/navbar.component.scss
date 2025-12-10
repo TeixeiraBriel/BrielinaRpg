@@ -1,0 +1,11 @@
+
+/* Opcional: deixa o navbar sempre visível e com fundo sólido ao rolar */
+#navbar-main {
+  position: sticky;
+  top: 0;
+  z-index: 1030;        /* acima do conteúdo, abaixo de modais */
+  padding-top: 10px; /* o espaço que usamos pro nav */
+  // background: linear-gradient(90deg, #1a1c4e 0%, #222664 100%);
+  // background: linear-gradient(135deg, #3b1f9e 0%, #a44cc5 50%, rgb(182, 81, 157) 100%);
+  //background: transparent; /* ou uma cor se quiser evitar ver o texto atrás */
+}
