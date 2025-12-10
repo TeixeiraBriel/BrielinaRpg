@@ -19,13 +19,13 @@
 
         <ng-template #content let-offcanvas>
             <div class="offcanvas-header">
-                <h4 class="offcanvas-title">Nova Ramificacao</h4>
+                <h4 class="offcanvas-title">{{ modoEdicao ? 'Editar Ramificação' : 'Nova Ramificação' }}</h4>
                 <button type="button" class="btn-close" aria-label="Close"
                     (click)="offcanvas.dismiss('Cross click')"></button>
             </div>
 
             <div class="offcanvas-body p-3">
-                <form #meuForm="ngForm" (ngSubmit)="postar(meuForm.value)">
+                <form #meuForm="ngForm" (ngSubmit)="postar(meuForm.value, offcanvas)">
                     <div class="form-group">
                         <label>Titulo da A��o:</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" placeholder="..." ngModel
@@ -46,7 +46,10 @@
                             ngModel #formResumoAula="ngModel" required name="campoNarrativa" maxlength="500" [(ngModel)]="campoNarrativa"></textarea>
                         <mat-hint align="end">{{campoNarrativa.length}}/500</mat-hint>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="loading">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Enviar
+                    </button>
                 </form>
             </div>
         </ng-template>
@@ -56,6 +59,7 @@
                 <div class=" text-center">
                     <button class="btn btn-lg btn-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="ResetarAventura()">Resetar Aventura</button>
                     <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="openEnd(content)">Registrar nova Ramificação</button>
+                    <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="isDonoNarrativa()" (click)="openEnd(content, narrativaPai)">Editar</button>
                 </div>
                 <div class=" text-center">
                     <p>{{narrativaPai.texto}}</p>
