@@ -1,0 +1,17 @@
+.zoom-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;   /* mantém proporção parecida com 960x600 */
+  overflow: hidden;
+  border-radius: .5rem;   /* opcional: arredondar como o thumbnail */
+}
+
+.zoom-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* preenche a caixa sem distorcer */
+  transition: transform .3s ease;
+}
+
+.zoom-thumb:hover .zoom-box img {
+  transform: scale(1.08); /* nível de zoom */
+}

@@ -1,0 +1,58 @@
+<main>
+    
+    <section class="header bg-gradient-default-app pb-0 pt-5 pt-md-8">
+        <div class="container d-flex align-items-center ">
+            <div class="col px-0">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <p class="text-white h1">Central de Testes</p>
+                        <p class="lead text-white">Local para testes de desenvolvimento em geral.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="position-relative">
+      <section class="p-3">
+        <div class="container shape-container d-flex align-items-center">
+          <div class="col px-0">
+            <div class="row align-items-center justify-content-center">
+              <div class="col-lg-6 text-center">
+                <!-- Player oculto com �udio -->
+                <div style="width: 1px; height: 1px; overflow: hidden;">
+                  <iframe 
+                  id="ytplayer"
+                  width="1" 
+                  height="1"
+                  [src]="getVideoUrl()"
+                  frameborder="0" 
+                  allow="autoplay">
+                  </iframe>
+                </div>
+          
+                <p>Ouvir uma musica teste?</p> 
+                <p>
+                  <!-- Botão para mutar/desmutar -->
+                  <button (click)="toggleMute()" [ngClass]="mutado === 1 ? 'btn btn-primary' : 'btn btn-secondary'" class="mb-2">
+                  {{ mutado === 1 ? 'Sim!' : 'Não!!' }}
+                  </button>
+                </p>
+          
+                <!-- Player visual (opcional) -->
+                <p>Teste de midia de video:</p>
+                <p>A Realidade De Jogar RPG De Mesa - Animação Meme | MaxNeton</p>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" 
+                      src="https://www.youtube.com/embed/2aQYlv3Yr3I" 
+                          allowfullscreen></iframe>
+                </div>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  

@@ -6,12 +6,14 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { NarrativaComponent } from './narrativa/narrativa.component';
 import { AuthGuard } from './Services/Auth/auth.guard';
+import { TestesComponent } from './testes/testes.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: SignupComponent },
     { path: 'Historia', component: NarrativaComponent, canActivate: [AuthGuard]  },
+    { path: 'Testes', component: TestesComponent, canActivate: [AuthGuard]  },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

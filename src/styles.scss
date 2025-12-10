@@ -5,3 +5,8 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.bg-gradient-default-app {
+  background: linear-gradient(90deg, #1a1c4e 0%, #222664 100%) !important;
+}
