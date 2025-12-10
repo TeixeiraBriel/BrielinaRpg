@@ -33,6 +33,14 @@
             </a>
           </li>
         </ul>
+        <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+          <li>
+            <a class="navbar-brand mr-lg-5" [routerLink]="['/Testes']"
+            [ngClass]="{'text-dark': !isCollapsed}">
+              <span class="nav-link-inner--text">Testes</span>
+            </a>
+          </li>
+        </ul>
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
           <li class="nav-item d-none d-lg-block ml-lg-4" *ngIf="!authService.estaLogado()">
             <a [routerLink]="['/login']" class="btn btn-neutral btn-icon">

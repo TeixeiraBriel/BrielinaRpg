@@ -18,6 +18,7 @@ import { SectionsComponent } from './sections/sections.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NarrativaComponent } from './narrativa/narrativa.component';
 import { CardNarrativaComponent } from './narrativa/card-narrativa/card-narrativa.component';
+import { TestesComponent } from './testes/testes.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { CardNarrativaComponent } from './narrativa/card-narrativa/card-narrativ
     SignupComponent,
     SectionsComponent,
     NarrativaComponent,
-    CardNarrativaComponent
+    CardNarrativaComponent,
+    TestesComponent
   ],
   imports: [
     BrowserModule,

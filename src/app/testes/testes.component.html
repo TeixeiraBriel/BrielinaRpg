@@ -1,0 +1,48 @@
+<main>
+    <div class="position-relative">
+      <section class="section section-lg section-hero section-shaped">
+        <div class="shape shape-style-1 shape-primary">
+          <!-- spans mantidos -->
+        </div>
+        <div class="container shape-container d-flex align-items-center mt-5">
+          <div class="col px-0">
+            <div class="row align-items-center justify-content-center">
+              <div class="col-lg-6 text-center">
+                <!-- Player oculto com �udio -->
+                <div style="width: 1px; height: 1px; overflow: hidden;">
+                  <iframe 
+                    id="ytplayer"
+                    width="1" 
+                    height="1"
+                    [src]="getVideoUrl()"
+                    frameborder="0" 
+                    allow="autoplay">
+                  </iframe>
+                </div>
+
+                <p class="lead text-white mt-5">AREA DE TESTES:</p>
+  
+                <p class="lead text-white">Ouvir uma musica teste? - 
+                  <!-- Bot�o para mutar/desmutar -->
+                  <button (click)="toggleMute()" class="btn btn-light mb-2">
+                    {{ mutado === 1 ? 'Mutado' : 'Com Som' }}
+                  </button>
+                </p>
+  
+                <!-- Player visual (opcional) -->
+                <p class="lead text-white">Teste de midia de video:</p>
+                <p class="lead text-white">A Realidade De Jogar RPG De Mesa - Animação Meme | MaxNeton</p>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" 
+                          src="https://www.youtube.com/embed/2aQYlv3Yr3I" 
+                          allowfullscreen></iframe>
+                </div>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
