@@ -5,20 +5,21 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './Shared/navbar/navbar.component';
+import { FooterComponent } from './Shared/footer/footer.component';
+import { HomeComponent } from './Pages/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { SectionsComponent } from './sections/sections.component';
+import { LoginComponent } from './Pages/login/login.component';
+import { SignupComponent } from './Pages/signup/signup.component';
+import { SectionsComponent } from './Pages/sections/sections.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NarrativaComponent } from './narrativa/narrativa.component';
-import { CardNarrativaComponent } from './narrativa/card-narrativa/card-narrativa.component';
-import { TestesComponent } from './testes/testes.component';
+import { NarrativaComponent } from './Pages/narrativa/narrativa.component';
+import { CardNarrativaComponent } from './Pages/narrativa/card-narrativa/card-narrativa.component';
+import { TestesComponent } from './Pages/testes/testes.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { TestesComponent } from './testes/testes.component';
     MatCardModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

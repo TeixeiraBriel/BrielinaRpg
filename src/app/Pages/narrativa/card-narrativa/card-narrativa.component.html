@@ -1,6 +1,6 @@
 <mat-card class="card">
   <mat-card-header>
-    <mat-card-title>{{narrativa.titulo}}</mat-card-title>
+    <mat-card-title>{{narrativa.titulo}} <span *ngIf="isAutor()" class="text-danger">*</span></mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <p>{{narrativa.descricao}}</p>

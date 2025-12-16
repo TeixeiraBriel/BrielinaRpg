@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../Services/Auth/auth.service';
+import { AuthService } from '../../Services/Auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -33,14 +33,14 @@ export class LoginComponent {
         if (res?.token) {
           this.authService.salvarToken(res.token);
           alert('Login realizado com sucesso!');
-          this.router.navigateByUrl(this.returnUrl); // redireciona para onde o usuário queria ir
+          this.router.navigateByUrl(this.returnUrl); // redireciona para onde o usuï¿½rio queria ir
         } else {
-          alert('Token não recebido.');
+          alert('Token nï¿½o recebido.');
         }
       },
       error: (err) => {
         console.error(err);
-        alert('Usuário ou senha inválidos.');
+        alert('Usuï¿½rio ou senha invï¿½lidos.');
       }
     });
   }

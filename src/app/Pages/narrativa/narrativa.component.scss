@@ -1,0 +1,41 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.card-container .card:not(:last-child) {
+    margin-right: 0;
+}
+
+.card-container .card:not(.highlight-card):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}
+
+.card-container .card:not(.highlight-card):hover .material-icons path {
+    fill: rgb(105, 103, 103);
+}
+
+// Estilo do card "Crie sua Decisão"
+app-card-narrativa.card-criar-decisao {
+    ::ng-deep mat-card {
+        background: #007bff !important;
+        color: #fff !important;
+        border: none !important;
+
+        mat-card-header mat-card-title {
+            color: #fff !important;
+        }
+
+        mat-card-content {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        &:hover {
+            background: #0056b3 !important;
+            box-shadow: 0 6px 20px rgba(0, 86, 179, 0.5);
+        }
+    }
+}

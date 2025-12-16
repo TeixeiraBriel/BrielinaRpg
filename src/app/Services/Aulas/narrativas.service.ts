@@ -22,14 +22,19 @@ export class NarrativasService {
   }
 
   getOneById(Id:number):Observable<Narrativa>{
-    return this.http.get<Narrativa>(this.apiUrl+Id);
+    return this.http.get<Narrativa>(this.apiUrl+"BuscaNarrativaPorId/"+Id);
   }
 
   Create(narrativa:Narrativa):Observable<string>{
     return this.http.post<string>(this.apiUrl+"/Nova", narrativa);
   }
 
+  Update(narrativa:Narrativa):Observable<string>{
+    // API returns plain text like 'Sucesso' — tell HttpClient to expect text
+    return this.http.put(this.apiUrl+"/"+narrativa.idNarrativas, narrativa, { responseType: 'text' });
+  }
+
   Delete(Id:number):Observable<Narrativa>{
-    return this.http.delete<Narrativa>(this.apiUrl+Id);
+    return this.http.delete<Narrativa>(this.apiUrl+"/"+Id);
   }
 }
