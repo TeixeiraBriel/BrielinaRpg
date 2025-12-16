@@ -1,4 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
+import { AuthService } from '../../../Services/Auth/auth.service';
 
 @Component({
   selector: 'app-card-narrativa',
@@ -24,7 +25,11 @@ export class CardNarrativaComponent {
     autor:""
   };
 
-  constructor() {
+  constructor(private authService: AuthService) {
     console.log(this.narrativa);
+  }
+
+  isAutor(): boolean {
+    return this.narrativa.autor == this.authService.obterNomeUsuario();
   }
 }

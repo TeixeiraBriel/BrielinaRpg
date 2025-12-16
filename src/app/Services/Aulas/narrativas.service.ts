@@ -35,6 +35,6 @@ export class NarrativasService {
   }
 
   Delete(Id:number):Observable<Narrativa>{
-    return this.http.delete<Narrativa>(this.apiUrl+Id);
+    return this.http.delete<Narrativa>(this.apiUrl+"/"+Id);
   }
 }

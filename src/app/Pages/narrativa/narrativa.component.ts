@@ -2,9 +2,9 @@ import { Component, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { firstValueFrom } from 'rxjs';
-import { Narrativa } from '../Interfaces/Narrativa';
-import { NarrativasService } from '../Services/Aulas/narrativas.service';
-import { AuthService } from '../Services/Auth/auth.service';
+import { Narrativa } from '../../Interfaces/Narrativa';
+import { NarrativasService } from '../../Services/Aulas/narrativas.service';
+import { AuthService } from '../../Services/Auth/auth.service';
 
 @Component({
   selector: 'app-narrativa',
@@ -21,6 +21,17 @@ export class NarrativaComponent {
     tipo: 0,
     autor:""
   };
+  
+  cardCriarDecisao: Narrativa = {
+    idNarrativas: -1,
+    titulo: "Criar Ramificação",
+    descricao: "Clique aqui para criar uma nova Ramificação para esta narrativa.",
+    texto: "",
+    ramificacoes: "",
+    tipo: 0,
+    autor:""
+  };
+
   narrativaNova: Narrativa = {
     idNarrativas: 0,
     titulo: "",
@@ -43,6 +54,7 @@ export class NarrativaComponent {
   }
 
 	openEnd(content: TemplateRef<any>, narrativa?: Narrativa) {
+		window.scrollTo(0, 0);
 		if (narrativa) {
 			// Modo edição
 			this.modoEdicao = true;
@@ -71,6 +83,21 @@ export class NarrativaComponent {
       } finally {
         this.loading = false;
       }
+  }
+
+  async ApagarAventura() {
+    if (confirm("Tem certeza que deseja apagar esta narrativa?")) {
+      try {
+        this.loading = true;
+        await firstValueFrom(this.listService.Delete(this.narrativaPai.idNarrativas));
+      } catch (err) {
+        console.error('Erro ao apagar narrativa:', err);
+      }
+      finally {
+        this.loading = false;
+        this.ResetarAventura();
+      }
+    }
   }
 
   async postar(dados: any, offcanvas?: any) {
@@ -130,6 +157,7 @@ export class NarrativaComponent {
   }
 
   carregarNarrativa(narrativaSelecionada: Narrativa) {
+    window.scrollTo(0, 0);
     this.narrativaPai = narrativaSelecionada;
     this.narrativaNova.ramificacoes = narrativaSelecionada.idNarrativas.toString();
     this.getAll();
@@ -163,5 +191,15 @@ export class NarrativaComponent {
 
   isDonoNarrativa(): boolean {
     return this.narrativaPai.autor == this.authService.obterNomeUsuario(); // ou outra l�gica que defina narrativa padr�o
+  }
+  
+  isAutorNarrativa(narrativa: Narrativa): boolean {
+    return narrativa.autor == this.authService.obterNomeUsuario();
+  }
+  
+  isNarrativaApagavel(): boolean {
+    let dono = this.narrativaPai.autor == this.authService.obterNomeUsuario(); // ou outra lgica que defina narrativa padro
+    let semRamificacoes = this.narrativas.length === 0;
+    return dono && semRamificacoes;
   }
 }

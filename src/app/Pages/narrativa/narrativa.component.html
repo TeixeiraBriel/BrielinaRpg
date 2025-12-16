@@ -6,7 +6,7 @@
                     <div class="row align-items-center justify-content-center">
                         <div class="col-lg-6 text-center" *ngIf="isNarrativaPadrao()">
                             <p class="text-white h1">Central de Historias</p>
-                            <p class="lead text-white">Escolha uma das aventuras para come�ar</p>
+                            <p class="lead text-white">Escolha uma das aventuras para começar</p>
                         </div>
                         <div class="col-lg-6 text-center" *ngIf="!isNarrativaPadrao()">
                             <p class="text-white h1">{{narrativaPai.titulo}}</p>
@@ -57,9 +57,10 @@
         <div class="container justify-content-center d-flex p-3">
             <div class="d-block">
                 <div class=" text-center">
-                    <button class="btn btn-lg btn-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="ResetarAventura()">Resetar Aventura</button>
-                    <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="openEnd(content)">Registrar nova Ramificação</button>
+                    <button class="btn btn-lg btn-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="ResetarAventura()">Voltar para inicio</button>
+                    <!-- <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="!isNarrativaPadrao()" (click)="openEnd(content)">Registrar nova Ramificação</button> -->
                     <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="isDonoNarrativa()" (click)="openEnd(content, narrativaPai)">Editar</button>
+                    <button class="btn btn-lg btn-outline-primary mb-2 me-2" *ngIf="isNarrativaApagavel()" (click)="ApagarAventura()">Apagar</button>
                 </div>
                 <div class=" text-center">
                     <p>{{narrativaPai.texto}}</p>
@@ -71,8 +72,8 @@
                         </div>
                     </div>
                     <ng-container *ngIf="!loading">
+                        <app-card-narrativa class="card m-3 card-criar-decisao" (click)="openEnd(content)" *ngIf="!isNarrativaPadrao()" [narrativa]="cardCriarDecisao"></app-card-narrativa>
                         <app-card-narrativa class="card m-3" *ngFor="let narrativaout of narrativas" (click)="carregarNarrativa(narrativaout)" [narrativa]="narrativaout"></app-card-narrativa>
-                        <div *ngIf="narrativas.length === 0" class="text-center text-muted p-3">Nenhuma ramificação encontrada.</div>
                     </ng-container>
                 </div>
             </div>
