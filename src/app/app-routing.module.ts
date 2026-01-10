@@ -8,6 +8,7 @@ import { NarrativaComponent } from './Pages/narrativa/narrativa.component';
 import { AuthGuard } from './Services/Auth/auth.guard';
 import { TestesComponent } from './Pages/testes/testes.component';
 import { SectionsComponent } from './Pages/sections/sections.component';
+import { SerafinsHomeComponent } from './Pages/Serafins/home/home.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'Historia', component: NarrativaComponent, canActivate: [AuthGuard]  },
     { path: 'Testes', component: TestesComponent, canActivate: [AuthGuard]  },
     { path: 'Sections', component: SectionsComponent, canActivate: [AuthGuard]  },
+    { path: 'Serafins/Home', component: SerafinsHomeComponent, canActivate: [AuthGuard]  },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

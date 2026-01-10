@@ -1,20 +1,23 @@
 <main>
   <div class="position-relative">
     <section class="header bg-gradient-default-app pb-8 pt-5 pt-md-8">
-    <div class="col px-0">
+      <div class="col px-0">
         <div class="row align-items-center justify-content-center">
           <div class="col-lg-6 text-center">
-              <p class="text-white h1">Inicio</p>
+            <p class="text-white h1">Inicio</p>
             <p class="lead text-white">
               No momento nossa plataforma é hospedada em serviços gratuitos. O Banco no
-              <a class="link-light text-decoration-underline" href="https://console.aiven.io/" target="_blank">Aiven</a>,
-              API no <a class="link-light text-decoration-underline" href="https://render.com/" target="_blank">Render</a>
-              e o front no <a class="link-light text-decoration-underline" href="https://vercel.com/" target="_blank">Vercel</a>.
+              <a class="link-light text-decoration-underline" href="https://console.aiven.io/"
+                target="_blank">Aiven</a>,
+              API no <a class="link-light text-decoration-underline" href="https://render.com/"
+                target="_blank">Render</a>
+              e o front no <a class="link-light text-decoration-underline" href="https://vercel.com/"
+                target="_blank">Vercel</a>.
               Então as vezes teremos lags e comportamentos indesejados, peço paciencia para que com o tempo podemos
               chegar em uma versão estavel e divertida!
             </p>
-              <!-- <p class="lead text-white">Escolha uma das aventuras para come�ar</p> -->
-            </div>
+            <!-- <p class="lead text-white">Escolha uma das aventuras para come�ar</p> -->
+          </div>
         </div>
       </div>
     </section>
@@ -31,10 +34,7 @@
             <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
               <a [routerLink]="['/Historia']" class="zoom-thumb d-block">
                 <div class="zoom-box mb-3">
-                  <img
-                    class="img-fluid"
-                    src="./assets/img/brand/MesaGtHistoria.png"
-                    alt="Imagem link Histórias">
+                  <img class="img-fluid" src="./assets/img/brand/MesaGtHistoria.png" alt="Imagem link Histórias">
                 </div>
                 <h5 class="mb-1">Historias</h5>
               </a>
@@ -47,19 +47,28 @@
             <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
               <a [routerLink]="['/Testes']" class="zoom-thumb d-block">
                 <div class="zoom-box mb-3">
-                  <img
-                    class="img-fluid"
-                    src="./assets/img/brand/MesaGTteste.png"
-                    alt="Imagem link Testes">
+                  <img class="img-fluid" src="./assets/img/brand/MesaGTteste.png" alt="Imagem link Testes">
                 </div>
                 <h5 class="mb-1">Testes</h5>
               </a>
-              <p >
+              <p>
                 Area para testes de novas funcionalidades.
               </p>
             </div>
-          </div>
 
+            <!-- Card Serafins -->
+            <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
+              <a [routerLink]="['/Serafins/Home']" class="zoom-thumb d-block">
+                <div class="zoom-box mb-3">
+                  <img class="img-fluid" src="./assets/img/brand/MesaGTteste.png" alt="Imagem link Serafins">
+                </div>
+                <h5 class="mb-1">Serafins</h5>
+              </a>
+              <p>
+                Area para funcionalidades para Serafins.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

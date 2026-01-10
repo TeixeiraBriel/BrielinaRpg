@@ -10,6 +10,7 @@ import { Narrativa } from 'src/app/Interfaces/Narrativa';
 })
 export class NarrativasService {
   private apiUrl = "https://brielinaapi.onrender.com/BrielinaRpg";
+  //private apiUrl = "https://localhost:7036/BrielinaRpg";
 
   constructor(private http:HttpClient) { }
 
