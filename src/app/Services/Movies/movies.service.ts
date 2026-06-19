@@ -8,8 +8,8 @@ import { MovieReviewDto, ReviewUpsertResult } from 'src/app/Interfaces/MovieRevi
   providedIn: 'root'
 })
 export class MoviesService {
-  //private baseUrl = 'https://brielinaapi.onrender.com/Movies/movies';
-  private baseUrl = 'https://localhost:7036/Movies/movies';
+  private baseUrl = 'https://brielinaapi.onrender.com/Movies/movies';
+  //private baseUrl = 'https://localhost:7036/Movies/movies';
 
   constructor(private http: HttpClient) {}
 
