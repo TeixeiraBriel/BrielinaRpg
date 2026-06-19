@@ -36,6 +36,14 @@
         </ul>
         <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
           <li>
+            <a class="navbar-brand mr-lg-5" [routerLink]="['/Filmes']"
+            [ngClass]="{'text-dark': !isCollapsed}">
+              <span class="nav-link-inner--text">Filmes</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+          <li>
             <a class="navbar-brand mr-lg-5" [routerLink]="['/Testes']"
             [ngClass]="{'text-dark': !isCollapsed}">
               <span class="nav-link-inner--text">Testes</span>

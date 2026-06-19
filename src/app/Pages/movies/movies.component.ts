@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { MovieItem } from '../../Interfaces/MovieItem';
 import { MovieReviewDto } from '../../Interfaces/MovieReviewDto';
 import { MoviesService } from 'src/app/Services/Movies/movies.service';
@@ -13,6 +14,10 @@ export class MoviesComponent implements OnInit {
   movieItems: MovieItem[] = [];
   reviews: MovieReviewDto[] = [];
   selectedMovieId: number | null = null;
+  expandedSynopsis = new Set<number>();
+  isSavingReview = false;
+  isAddingMovie = false;
+  isLoadingMovies = true;
 
   newMovie: MovieItem = {
     id: 0,
@@ -50,7 +55,7 @@ export class MoviesComponent implements OnInit {
     return !!this.reviewForm.movieId && this.reviewForm.review.trim().length > 0;
   }
 
-  constructor(private moviesService: MoviesService, private router: Router) {}
+  constructor(private moviesService: MoviesService, private router: Router, private offcanvasService: NgbOffcanvas) {}
 
   ngOnInit(): void {
     this.loadMovies();
@@ -58,9 +63,17 @@ export class MoviesComponent implements OnInit {
   }
 
   loadMovies(): void {
+    this.isLoadingMovies = true;
     this.moviesService.getAll().subscribe({
-      next: movies => this.movieItems = movies,
-      error: err => console.error('Erro ao carregar filmes', err)
+      next: movies => {
+        this.movieItems = movies;
+        this.sortMoviesByIdDesc();
+        this.isLoadingMovies = false;
+      },
+      error: err => {
+        console.error('Erro ao carregar filmes', err);
+        this.isLoadingMovies = false;
+      }
     });
   }
 
@@ -71,7 +84,7 @@ export class MoviesComponent implements OnInit {
     });
   }
 
-  selectMovieForReview(movie: MovieItem): void {
+  openReviewOffcanvas(movie: MovieItem, content: TemplateRef<any>): void {
     this.selectedMovieId = movie.id;
     const existing = this.reviews.find(r => r.movieId === movie.id);
     this.reviewForm = existing ? { ...existing } : {
@@ -81,6 +94,8 @@ export class MoviesComponent implements OnInit {
       review: '',
       recommended: false
     };
+
+    this.offcanvasService.open(content, { position: 'end' });
   }
 
   getReviewForMovie(movieId: number): MovieReviewDto | undefined {
@@ -95,19 +110,36 @@ export class MoviesComponent implements OnInit {
     return Math.round((total / this.movieItems.length) * 10) / 10;
   }
 
-  onAddMovie(event: Event): void {
+  onAddMovie(event: Event, offcanvas?: any): void {
     event.preventDefault();
-    this.addMovie();
+    this.addMovie(offcanvas);
   }
 
-  addMovie(): void {
+  openNewMovieOffcanvas(content: TemplateRef<any>): void {
+    this.isAddingMovie = false;
+    this.newMovie = {
+      id: 0,
+      title: '',
+      genre: '',
+      year: new Date().getFullYear(),
+      rating: 8,
+      posterUrl: '',
+      directedBy: '',
+      sinopse: ''
+    };
+    this.offcanvasService.open(content, { position: 'end' });
+  }
+
+  addMovie(offcanvas?: any): void {
     if (!this.newMovie.title.trim() || !this.newMovie.genre.trim() || !this.newMovie.posterUrl.trim()) {
       return;
     }
 
+    this.isAddingMovie = true;
     this.moviesService.create(this.newMovie).subscribe({
       next: movie => {
         this.movieItems.push(movie);
+        this.sortMoviesByIdDesc();
         this.newMovie = {
           id: 0,
           title: '',
@@ -118,8 +150,21 @@ export class MoviesComponent implements OnInit {
           directedBy: '',
           sinopse: ''
         };
+        this.isAddingMovie = false;
+        if (offcanvas) {
+          if (typeof offcanvas.close === 'function') {
+            offcanvas.close('submitted');
+          } else if (typeof offcanvas.dismiss === 'function') {
+            offcanvas.dismiss('submitted');
+          } else {
+            this.offcanvasService.dismiss();
+          }
+        }
       },
-      error: err => console.error('Erro ao criar filme', err)
+      error: err => {
+        console.error('Erro ao criar filme', err);
+        this.isAddingMovie = false;
+      }
     });
   }
 
@@ -162,20 +207,21 @@ export class MoviesComponent implements OnInit {
     return 300 - this.reviewForm.review.length;
   }
 
-  onSubmitReview(event: Event): void {
+  onSubmitReview(event: Event, offcanvas?: any): void {
     event.preventDefault();
-    this.upsertReview();
+    this.upsertReview(offcanvas);
   }
 
   viewMovieReviews(movieId: number): void {
     this.router.navigate(['/Filmes', movieId, 'reviews']);
   }
 
-  upsertReview(): void {
-    if (!this.canSubmitReview) {
+  upsertReview(offcanvas?: any): void {
+    if (!this.canSubmitReview || this.isSavingReview) {
       return;
     }
 
+    this.isSavingReview = true;
     this.moviesService.upsertReview(this.reviewForm).subscribe({
       next: result => {
         this.reviewForm = {
@@ -188,8 +234,22 @@ export class MoviesComponent implements OnInit {
         this.selectedMovieId = null;
         this.loadMovies();
         this.loadMyReviews();
+        this.isSavingReview = false;
+
+        if (offcanvas) {
+          if (typeof offcanvas.close === 'function') {
+            offcanvas.close('submitted');
+          } else if (typeof offcanvas.dismiss === 'function') {
+            offcanvas.dismiss('submitted');
+          } else {
+            this.offcanvasService.dismiss();
+          }
+        }
       },
-      error: err => console.error('Erro ao salvar review', err)
+      error: err => {
+        console.error('Erro ao salvar review', err);
+        this.isSavingReview = false;
+      }
     });
   }
 
@@ -200,7 +260,23 @@ export class MoviesComponent implements OnInit {
     });
   }
 
+  isSynopsisExpanded(movieId: number): boolean {
+    return this.expandedSynopsis.has(movieId);
+  }
+
+  toggleSynopsis(movieId: number): void {
+    if (this.expandedSynopsis.has(movieId)) {
+      this.expandedSynopsis.delete(movieId);
+    } else {
+      this.expandedSynopsis.add(movieId);
+    }
+  }
+
   trackByMovie(index: number, movie: MovieItem): number {
     return movie.id;
+  }
+
+  private sortMoviesByIdDesc(): void {
+    this.movieItems.sort((a, b) => b.id - a.id);
   }
 }

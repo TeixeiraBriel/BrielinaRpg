@@ -26,11 +26,39 @@ export class AuthService {
   }
 
   estaLogado(): boolean {
-    return !!this.obterToken();
+    const token = this.obterToken();
+    if (!token) {
+      return false;
+    }
+
+    if (this.isTokenExpired(token)) {
+      this.logout();
+      return false;
+    }
+
+    return true;
   }
 
   logout() {
     localStorage.removeItem('token');
+  }
+
+  isTokenExpired(token?: string): boolean {
+    const jwt = token ?? this.obterToken();
+    if (!jwt) {
+      return true;
+    }
+
+    try {
+      const payload = JSON.parse(atob(jwt.split('.')[1]));
+      const exp = Number(payload?.exp);
+      if (!exp || isNaN(exp)) {
+        return false;
+      }
+      return exp < Math.floor(Date.now() / 1000);
+    } catch {
+      return true;
+    }
   }
 
   obterNomeUsuario(): string {
