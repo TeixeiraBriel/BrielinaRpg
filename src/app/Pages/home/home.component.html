@@ -1,4 +1,4 @@
-<main>
+﻿<main>
   <div class="position-relative">
     <section class="header bg-gradient-default-app pb-8 pt-5 pt-md-8">
       <div class="col px-0">
@@ -16,7 +16,7 @@
               Então as vezes teremos lags e comportamentos indesejados, peço paciencia para que com o tempo podemos
               chegar em uma versão estavel e divertida!
             </p>
-            <!-- <p class="lead text-white">Escolha uma das aventuras para come�ar</p> -->
+            <!-- <p class="lead text-white">Escolha uma das aventuras para começar</p> -->
           </div>
         </div>
       </div>
@@ -43,6 +43,19 @@
               </p>
             </div>
 
+            <!-- Card Filmes -->
+            <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
+              <a [routerLink]="['/Filmes']" class="zoom-thumb d-block">
+                <div class="zoom-box mb-3">
+                  <img class="img-fluid" src="./assets/img/brand/MesaGTteste.png" alt="Imagem link Filmes">
+                </div>
+                <h5 class="mb-1">Filmes</h5>
+              </a>
+              <p>
+                Acesse a lista de filmes com avaliação e média de rating.
+              </p>
+            </div>
+
             <!-- Card Testes -->
             <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
               <a [routerLink]="['/Testes']" class="zoom-thumb d-block">
@@ -56,11 +69,12 @@
               </p>
             </div>
 
+            
             <!-- Card Serafins -->
             <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
               <a [routerLink]="['/Serafins/Home']" class="zoom-thumb d-block">
                 <div class="zoom-box mb-3">
-                  <img class="img-fluid" src="./assets/img/brand/MesaGTteste.png" alt="Imagem link Serafins">
+                  <img class="img-fluid" src="./assets/img/brand/serafinslogo.jpg" alt="Imagem link Serafins">
                 </div>
                 <h5 class="mb-1">Serafins</h5>
               </a>

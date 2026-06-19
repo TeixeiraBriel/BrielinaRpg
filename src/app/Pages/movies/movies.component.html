@@ -1,0 +1,147 @@
+<main>
+  <div class="position-relative">
+    <section class="header bg-gradient-default-app pb-8 pt-5 pt-md-8">
+      <div class="col px-0">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-lg-6 text-center">
+            <p class="text-white h1">Filmes</p>
+            <p class="lead text-white">
+              Nesta tela você pode ver a média de rating dos filmes e criar sua própria avaliação.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-lg section-shaped">
+      <div class="container">
+        <div class="bd-content">
+          <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
+            <div>
+              <h2>Lista de filmes</h2>
+              <p>Adicione filmes, veja a média e avalie seus próprios registros.</p>
+            </div>
+            <div class="rating-summary text-end">
+              <small class="text-muted">Média geral de rating</small>
+              <h3>{{ averageRating }} / 10</h3>
+              <span class="badge bg-secondary">{{ movieItems.length }} filmes</span>
+            </div>
+          </div>
+
+          <div class="row mb-5">
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-md-6 mb-4" *ngFor="let movie of movieItems; trackBy: trackByMovie">
+                  <div class="card movie-card h-100">
+                    <img [src]="movie.posterUrl" [alt]="movie.title" class="card-img-top movie-poster" />
+                    <div class="card-body d-flex flex-column">
+                      <h5 class="card-title">{{ movie.title }}</h5>
+                      <p class="text-muted mb-1">{{ movie.genre }} • {{ movie.year }}</p>
+                      <p class="movie-sinopse mb-3">{{ movie.sinopse }}</p>
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary">Rating: {{ movie.rating.toFixed(1) }}/10</span>
+                        <span class="text-sm text-muted">Review: {{ getReviewForMovie(movie.id)?.rating ?? '—' }}</span>
+                      </div>
+                      <div class="rating-input">
+                        <label class="form-label mb-1">Seu rating</label>
+                        <input #ratingInput type="number" class="form-control" min="0" max="10" step="0.1"
+                          [value]="movie.rating" (change)="updateRating(movie, $any(ratingInput).valueAsNumber || 0)" />
+                      </div>
+                      <div class="d-flex flex-column gap-2 mt-3">
+                        <button type="button" class="btn btn-outline-secondary btn-sm w-100" (click)="selectMovieForReview(movie)">
+                          {{ getReviewForMovie(movie.id) ? 'Editar review' : 'Escrever review' }}
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm w-100" (click)="viewMovieReviews(movie.id)">
+                          Ver reviews
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="card card-form">
+                <div class="card-body">
+                  <h5 class="card-title">Cadastrar novo filme</h5>
+                  <form (submit)="onAddMovie($event)">
+                    <div class="mb-3">
+                      <label class="form-label">Título</label>
+                      <input #titleInput type="text" class="form-control" required [value]="newMovie.title" (input)="setNewMovieField('title', titleInput.value)" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Gênero</label>
+                      <input #genreInput type="text" class="form-control" required [value]="newMovie.genre" (input)="setNewMovieField('genre', genreInput.value)" />
+                    </div>
+                    <div class="mb-3 row g-2">
+                      <div class="col-6">
+                        <label class="form-label">Ano</label>
+                        <input #yearInput type="number" class="form-control" [value]="newMovie.year" (input)="setNewMovieField('year', $any(yearInput).valueAsNumber || 0)" min="1900" />
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">Rating</label>
+                        <input #movieRatingInput type="number" class="form-control" [value]="newMovie.rating" (input)="setNewMovieField('rating', $any(movieRatingInput).valueAsNumber || 0)" min="0" max="10" step="0.1" />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Poster URL</label>
+                      <input #posterUrlInput type="text" class="form-control" required [value]="newMovie.posterUrl" (input)="setNewMovieField('posterUrl', posterUrlInput.value)" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Sinopse</label>
+                      <textarea #sinopseInput class="form-control" rows="3" [value]="newMovie.sinopse" (input)="setNewMovieField('sinopse', sinopseInput.value)"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" [disabled]="!canAddMovie">Adicionar filme</button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card card-form mt-4">
+                <div class="card-body">
+                  <h5 class="card-title">Review do filme</h5>
+                  <div *ngIf="selectedMovieId; else reviewPlaceholder">
+                    <div class="mb-3">
+                      <label class="form-label">Filme</label>
+                      <input type="text" class="form-control" [value]="selectedMovieTitle" disabled />
+                    </div>
+                    <form (submit)="onSubmitReview($event)">
+                      <div class="mb-3">
+                        <label class="form-label">Rating</label>
+                        <input #reviewRatingInput type="number" class="form-control" min="0" max="10" step="0.1"
+                          [value]="reviewForm.rating" (input)="setReviewField('rating', $any(reviewRatingInput).valueAsNumber || 0)" required />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Texto da review</label>
+                        <textarea #reviewTextInput class="form-control" rows="4" maxlength="300" [value]="reviewForm.review" (input)="setReviewField('review', reviewTextInput.value)"></textarea>
+                        <div class="form-text text-end">{{ reviewCharsRemaining }} caracteres restantes</div>
+                      </div>
+                      <div class="form-check mb-3">
+                        <input #recommendedCheckbox class="form-check-input" type="checkbox" id="recommended" [checked]="reviewForm.recommended" (change)="setReviewField('recommended', recommendedCheckbox.checked)" />
+                        <label class="form-check-label" for="recommended">Recomendo este filme</label>
+                      </div>
+                      <button type="submit" class="btn btn-success w-100" [disabled]="!canSubmitReview">Salvar review</button>
+                    </form>
+                  </div>
+                  <ng-template #reviewPlaceholder>
+                    <div class="text-center text-muted py-4">
+                      Selecione um filme para adicionar ou editar sua review.
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="alert alert-info mb-0">
+                Você pode criar um novo registro e ajustar o rating de cada filme diretamente na lista.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

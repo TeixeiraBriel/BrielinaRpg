@@ -20,7 +20,7 @@
                       <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
                     <input [(ngModel)]="nome" name="nome" class="form-control" placeholder="Nome" type="text"
-                      (focus)="focus=true" (blur)="focus=false">
+                      maxlength="50" (focus)="focus=true" (blur)="focus=false">
                   </div>
                 </div>
 
@@ -31,7 +31,7 @@
                       <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                     </div>
                     <input [(ngModel)]="usuario" name="usuario" class="form-control" placeholder="Usuário" type="text"
-                      (focus)="focus1=true" (blur)="focus1=false">
+                      maxlength="20" (input)="onUsuarioInput($event)" (focus)="focus1=true" (blur)="focus1=false">
                   </div>
                 </div>
 
@@ -58,12 +58,13 @@
                 </div>
 
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary mt-4" (click)="registrar()">
-                    Criar conta
+                  <button type="button" class="btn btn-primary mt-4" (click)="registrar()" [disabled]="isLoading">
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-2"></span>
+                    <span *ngIf="isLoading">Aguardando...</span>
+                    <span *ngIf="!isLoading">Criar conta</span>
                   </button>
                 </div>
               </form>
-
             </div>
           </div>
         </div>

@@ -25,6 +25,8 @@ import { NarrativaComponent } from './Pages/narrativa/narrativa.component';
 import { CardNarrativaComponent } from './Pages/narrativa/card-narrativa/card-narrativa.component';
 import { TestesComponent } from './Pages/testes/testes.component';
 import { SerafinsHomeComponent } from './Pages/Serafins/home/home.component';
+import { MoviesComponent } from './Pages/movies/movies.component';
+import { MovieReviewsComponent } from './Pages/movies/movie-reviews.component';
 import { ComentariosDialogComponent } from './Pages/Serafins/comentarios/comentarios-dialog.component';
 
 import { AuthInterceptor } from './Services/Auth/auth.interceptor';
@@ -42,6 +44,8 @@ import { AuthInterceptor } from './Services/Auth/auth.interceptor';
     CardNarrativaComponent,
     TestesComponent,
     SerafinsHomeComponent,
+    MoviesComponent,
+    MovieReviewsComponent,
     ComentariosDialogComponent  
   ],
   imports: [
