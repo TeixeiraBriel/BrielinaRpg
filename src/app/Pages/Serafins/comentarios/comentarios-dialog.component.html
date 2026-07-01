@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Comentários - {{ data.tema.livro }}</h2>
+
+<mat-dialog-content>
+  <p *ngIf="!data.tema.comentarios?.length">Nenhum comentário ainda.</p>
+
+  <ul *ngIf="data.tema.comentarios?.length">
+    <li *ngFor="let c of data.tema.comentarios">
+      <strong>{{ c.autor }}</strong> -
+      {{ c.data | date:'dd/MM/yyyy HH:mm' }}:
+      {{ c.texto }}
+    </li>
+  </ul>
+
+  <h3>Novo comentário</h3>
+  <textarea [(ngModel)]="novoComentario"
+            rows="3"
+            style="width: 100%;"></textarea>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="fechar()">Cancelar</button>
+  <button mat-raised-button color="primary"
+          (click)="salvar()"
+          [disabled]="!novoComentario?.trim()">
+    Adicionar
+  </button>
+</mat-dialog-actions>

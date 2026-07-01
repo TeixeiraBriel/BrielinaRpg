@@ -1,0 +1,75 @@
+<main>
+  <div class="position-relative">
+    <section class="header bg-gradient-default-app pb-8 pt-5 pt-md-8">
+      <div class="col px-0">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-lg-8 text-center">
+            <p class="text-white h1">Reviews do filme</p>
+            <p class="lead text-white">Veja as avaliações e recomendações deste filme.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-lg section-shaped">
+      <div class="container">
+        <div class="bd-content">
+          <button class="btn btn-outline-primary mb-4" type="button" (click)="goBack()">← Voltar para filmes</button>
+
+          <div *ngIf="movie; else loading">
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="d-flex align-items-center gap-4 flex-wrap">
+                  <img [src]="movie?.posterUrl" [alt]="movie?.title" class="movie-detail-poster" />
+                  <div>
+                    <h2>{{ movie?.title }}</h2>
+                    <p class="text-muted mb-1">{{ movie?.genre }} • {{ movie?.year }}</p>
+                    <p class="mb-1">Rating médio: <strong>{{ movie?.rating?.toFixed(1) }}/10</strong></p>
+                    <p>{{ movie?.sinopse }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Reviews</h5>
+                <div *ngIf="reviews.length; else noReviews">
+                  <div class="list-group">
+                    <div class="list-group-item" *ngFor="let review of reviews; trackBy: trackByReview">
+                      <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                          <strong>Nota: {{ review.rating.toFixed(1) }}/10</strong>
+                          <div class="text-muted small">
+                            {{ review.userName ? 'Por ' + review.userName : 'Autor desconhecido' }}
+                          </div>
+                        </div>
+                        <span class="badge bg-{{ review.recommended ? 'success' : 'secondary' }}">
+                          {{ review.recommended ? 'Recomendado' : 'Não recomendado' }}
+                        </span>
+                      </div>
+                      <p class="mb-0">{{ review.review }}</p>
+                    </div>
+                  </div>
+                </div>
+                <ng-template #noReviews>
+                  <div class="alert alert-info mb-0">
+                    Ainda não há reviews para este filme.
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #loading>
+            <div class="alert alert-secondary">Carregando detalhes do filme...</div>
+          </ng-template>
+
+          <div *ngIf="errorMessage" class="alert alert-danger mt-4">
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

@@ -1,0 +1,75 @@
+<main>
+  <div class="position-relative">
+    <section class="header bg-gradient-default-app pb-8 pt-5 pt-md-8">
+      <div class="col px-0">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-lg-8 text-center">
+            <p class="text-white h1">Feed de reviews</p>
+            <p class="lead text-white">Veja todas as avaliações e navegue para os detalhes do filme.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-lg section-shaped">
+      <div class="container">
+        <div class="bd-content">
+          <button class="btn btn-outline-primary mb-4" type="button" (click)="goBack()">← Voltar para filmes</button>
+
+          <div *ngIf="isLoadingFeed" class="alert alert-secondary">Carregando feed de reviews...</div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+          <div *ngIf="!isLoadingFeed && !errorMessage" class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <h5 class="card-title mb-0">Todas as reviews</h5>
+                <div class="btn-group" role="group" aria-label="Filtro de ordenação das reviews">
+                  <button type="button" class="btn btn-sm" [class.btn-primary]="sortMode === 'newest'" [class.btn-outline-primary]="sortMode !== 'newest'" (click)="setSortMode('newest')">
+                    Mais novos
+                  </button>
+                  <button type="button" class="btn btn-sm" [class.btn-primary]="sortMode === 'rating'" [class.btn-outline-primary]="sortMode !== 'rating'" (click)="setSortMode('rating')">
+                    Maior rating
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="sortedReviews.length; else noFeedReviews" class="list-group">
+                <a class="list-group-item list-group-item-action" *ngFor="let review of pagedReviews; trackBy: trackByReview" [routerLink]="['/Filmes', review.movieId, 'reviews']">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                      <strong>{{ review.movieTitle }}</strong>
+                      <div class="text-muted small">
+                        {{ review.userName ? 'Por ' + review.userName : 'Autor desconhecido' }}
+                      </div>
+                    </div>
+                    <span class="badge bg-{{ review.recommended ? 'success' : 'secondary' }}">
+                      {{ review.recommended ? 'Recomendado' : 'Não recomendado' }}
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-semibold">Nota: {{ review.rating.toFixed(1) }}/10</span>
+                  </div>
+                  <p class="mb-0 text-truncate">{{ review.review }}</p>
+                </a>
+              </div>
+              <div *ngIf="sortedReviews.length > 0" class="d-flex justify-content-between align-items-center mt-3">
+                <span class="text-muted small">Página {{ currentPage }} de {{ totalPages }}</span>
+                <div class="btn-group" role="group" aria-label="Paginação das reviews">
+                  <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+                    Anterior
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+                    Próxima
+                  </button>
+                </div>
+              </div>
+              <ng-template #noFeedReviews>
+                <div class="alert alert-info mb-0">Ainda não há reviews para exibir.</div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
