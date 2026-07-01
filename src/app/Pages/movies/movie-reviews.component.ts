@@ -13,6 +13,7 @@ export class MovieReviewsComponent implements OnInit {
   movie?: MovieItem;
   reviews: MovieReviewDto[] = [];
   errorMessage = '';
+  returnTo: 'feed' | 'movies' = 'movies';
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +22,8 @@ export class MovieReviewsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.returnTo = this.route.snapshot.queryParamMap.get('from') === 'feed' ? 'feed' : 'movies';
+
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!id) {
       this.errorMessage = 'Filme inválido.';
@@ -56,7 +59,12 @@ export class MovieReviewsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/Filmes', 'reviews']);
+    if (this.returnTo === 'feed') {
+      this.router.navigate(['/Filmes', 'reviews']);
+      return;
+    }
+
+    this.router.navigate(['/Filmes']);
   }
 
   trackByReview(index: number, review: MovieReviewDto): number {

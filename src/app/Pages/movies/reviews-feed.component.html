@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div *ngIf="sortedReviews.length; else noFeedReviews" class="list-group">
-                <a class="list-group-item list-group-item-action" *ngFor="let review of pagedReviews; trackBy: trackByReview" [routerLink]="['/Filmes', review.movieId, 'reviews']">
+                <a class="list-group-item list-group-item-action" *ngFor="let review of pagedReviews; trackBy: trackByReview" [routerLink]="['/Filmes', review.movieId, 'reviews']" [queryParams]="{ from: 'feed' }">
                   <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
                       <strong>{{ review.movieTitle }}</strong>

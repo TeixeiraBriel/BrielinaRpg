@@ -14,18 +14,20 @@
     <section class="section section-lg section-shaped">
       <div class="container">
         <div class="bd-content">
-          <button class="btn btn-outline-primary mb-4" type="button" (click)="goBack()">← Voltar para filmes</button>
+          <button class="btn btn-outline-primary mb-4" type="button" (click)="goBack()">
+            {{ returnTo === 'feed' ? '← Voltar para o feed de reviews' : '← Voltar para filmes' }}
+          </button>
 
           <div *ngIf="movie; else loading">
             <div class="card mb-4">
               <div class="card-body">
                 <div class="d-flex align-items-center gap-4 flex-wrap">
-                  <img [src]="movie?.posterUrl" [alt]="movie?.title" class="movie-detail-poster" />
+                  <img [src]="movie.posterUrl" [alt]="movie.title" class="movie-detail-poster" />
                   <div>
-                    <h2>{{ movie?.title }}</h2>
-                    <p class="text-muted mb-1">{{ movie?.genre }} • {{ movie?.year }}</p>
-                    <p class="mb-1">Rating médio: <strong>{{ movie?.rating?.toFixed(1) }}/10</strong></p>
-                    <p>{{ movie?.sinopse }}</p>
+                    <h2>{{ movie.title }}</h2>
+                    <p class="text-muted mb-1">{{ movie.genre }} • {{ movie.year }}</p>
+                    <p class="mb-1">Rating médio: <strong>{{ movie.rating.toFixed(1) }}/10</strong></p>
+                    <p>{{ movie.sinopse }}</p>
                   </div>
                 </div>
               </div>

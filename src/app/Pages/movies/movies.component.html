@@ -140,8 +140,8 @@
                         <button type="button" class="btn btn-outline-secondary btn-sm w-100" (click)="openReviewOffcanvas(movie, reviewContent)">
                           {{ getReviewForMovie(movie.id) ? 'Editar review' : 'Escrever review' }}
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm w-100" (click)="viewAllReviewsFeed()">
-                          Ver feed de reviews
+                        <button type="button" class="btn btn-outline-primary btn-sm w-100" (click)="viewMovieReviews(movie)">
+                          Ver reviews
                         </button>
                       </div>
                     </div>

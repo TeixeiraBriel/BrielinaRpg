@@ -47,7 +47,7 @@ export class MoviesComponent implements OnInit {
   }
 
   get selectedMovieTitle(): string {
-    const selected = this.movieItems.find(m => m.id === this.selectedMovieId ?? -1);
+    const selected = this.movieItems.find(m => m.id === (this.selectedMovieId ?? -1));
     return selected ? selected.title : '';
   }
 
@@ -214,6 +214,12 @@ export class MoviesComponent implements OnInit {
 
   viewAllReviewsFeed(): void {
     this.router.navigate(['/Filmes', 'reviews']);
+  }
+
+  viewMovieReviews(movie: MovieItem): void {
+    this.router.navigate(['/Filmes', movie.id, 'reviews'], {
+      queryParams: { from: 'movies' }
+    });
   }
 
   upsertReview(offcanvas?: any): void {
