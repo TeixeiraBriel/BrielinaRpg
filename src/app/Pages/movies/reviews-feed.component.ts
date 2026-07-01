@@ -12,6 +12,9 @@ export class ReviewsFeedComponent implements OnInit {
   reviewsFeed: ReviewFeedItem[] = [];
   isLoadingFeed = true;
   errorMessage = '';
+  currentPage = 1;
+  pageSize = 10;
+  sortMode: 'newest' | 'rating' = 'newest';
 
   constructor(
     private moviesService: MoviesService,
@@ -25,10 +28,11 @@ export class ReviewsFeedComponent implements OnInit {
   loadFeed(): void {
     this.isLoadingFeed = true;
     this.errorMessage = '';
+    this.currentPage = 1;
 
     this.moviesService.getAllReviewsFeed().subscribe({
       next: reviews => {
-        this.reviewsFeed = reviews.sort((a, b) => b.id - a.id);
+        this.reviewsFeed = reviews;
         this.isLoadingFeed = false;
       },
       error: err => {
@@ -37,6 +41,40 @@ export class ReviewsFeedComponent implements OnInit {
         this.isLoadingFeed = false;
       }
     });
+  }
+
+  get sortedReviews(): ReviewFeedItem[] {
+    return [...this.reviewsFeed].sort((a, b) => {
+      if (this.sortMode === 'rating') {
+        if (b.rating !== a.rating) {
+          return b.rating - a.rating;
+        }
+      }
+
+      return b.id - a.id;
+    });
+  }
+
+  get pagedReviews(): ReviewFeedItem[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.sortedReviews.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.sortedReviews.length / this.pageSize));
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+
+    this.currentPage = page;
+  }
+
+  setSortMode(mode: 'newest' | 'rating'): void {
+    this.sortMode = mode;
+    this.currentPage = 1;
   }
 
   goBack(): void {

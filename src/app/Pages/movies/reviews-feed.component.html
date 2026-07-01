@@ -22,9 +22,19 @@
 
           <div *ngIf="!isLoadingFeed && !errorMessage" class="card">
             <div class="card-body">
-              <h5 class="card-title">Todas as reviews</h5>
-              <div *ngIf="reviewsFeed.length; else noFeedReviews" class="list-group">
-                <a class="list-group-item list-group-item-action" *ngFor="let review of reviewsFeed; trackBy: trackByReview" [routerLink]="['/Filmes', review.movieId, 'reviews']">
+              <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <h5 class="card-title mb-0">Todas as reviews</h5>
+                <div class="btn-group" role="group" aria-label="Filtro de ordenação das reviews">
+                  <button type="button" class="btn btn-sm" [class.btn-primary]="sortMode === 'newest'" [class.btn-outline-primary]="sortMode !== 'newest'" (click)="setSortMode('newest')">
+                    Mais novos
+                  </button>
+                  <button type="button" class="btn btn-sm" [class.btn-primary]="sortMode === 'rating'" [class.btn-outline-primary]="sortMode !== 'rating'" (click)="setSortMode('rating')">
+                    Maior rating
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="sortedReviews.length; else noFeedReviews" class="list-group">
+                <a class="list-group-item list-group-item-action" *ngFor="let review of pagedReviews; trackBy: trackByReview" [routerLink]="['/Filmes', review.movieId, 'reviews']">
                   <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
                       <strong>{{ review.movieTitle }}</strong>
@@ -41,6 +51,17 @@
                   </div>
                   <p class="mb-0 text-truncate">{{ review.review }}</p>
                 </a>
+              </div>
+              <div *ngIf="sortedReviews.length > 0" class="d-flex justify-content-between align-items-center mt-3">
+                <span class="text-muted small">Página {{ currentPage }} de {{ totalPages }}</span>
+                <div class="btn-group" role="group" aria-label="Paginação das reviews">
+                  <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+                    Anterior
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+                    Próxima
+                  </button>
+                </div>
               </div>
               <ng-template #noFeedReviews>
                 <div class="alert alert-info mb-0">Ainda não há reviews para exibir.</div>
