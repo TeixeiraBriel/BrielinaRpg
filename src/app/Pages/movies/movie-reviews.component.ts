@@ -56,7 +56,7 @@ export class MovieReviewsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/Filmes']);
+    this.router.navigate(['/Filmes', 'reviews']);
   }
 
   trackByReview(index: number, review: MovieReviewDto): number {

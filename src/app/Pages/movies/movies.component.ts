@@ -212,8 +212,8 @@ export class MoviesComponent implements OnInit {
     this.upsertReview(offcanvas);
   }
 
-  viewMovieReviews(movieId: number): void {
-    this.router.navigate(['/Filmes', movieId, 'reviews']);
+  viewAllReviewsFeed(): void {
+    this.router.navigate(['/Filmes', 'reviews']);
   }
 
   upsertReview(offcanvas?: any): void {

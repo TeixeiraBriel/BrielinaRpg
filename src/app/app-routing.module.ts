@@ -11,6 +11,7 @@ import { SectionsComponent } from './Pages/sections/sections.component';
 import { SerafinsHomeComponent } from './Pages/Serafins/home/home.component';
 import { MoviesComponent } from './Pages/movies/movies.component';
 import { MovieReviewsComponent } from './Pages/movies/movie-reviews.component';
+import { ReviewsFeedComponent } from './Pages/movies/reviews-feed.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: 'register', component: SignupComponent },
     { path: 'Historia', component: NarrativaComponent, canActivate: [AuthGuard]  },
     { path: 'Filmes', component: MoviesComponent },
+    { path: 'Filmes/reviews', component: ReviewsFeedComponent },
     { path: 'Filmes/:id/reviews', component: MovieReviewsComponent },
     { path: 'Testes', component: TestesComponent, canActivate: [AuthGuard]  },
     { path: 'Sections', component: SectionsComponent, canActivate: [AuthGuard]  },

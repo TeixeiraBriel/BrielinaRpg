@@ -27,6 +27,7 @@ import { TestesComponent } from './Pages/testes/testes.component';
 import { SerafinsHomeComponent } from './Pages/Serafins/home/home.component';
 import { MoviesComponent } from './Pages/movies/movies.component';
 import { MovieReviewsComponent } from './Pages/movies/movie-reviews.component';
+import { ReviewsFeedComponent } from './Pages/movies/reviews-feed.component';
 import { ComentariosDialogComponent } from './Pages/Serafins/comentarios/comentarios-dialog.component';
 
 import { AuthInterceptor } from './Services/Auth/auth.interceptor';
@@ -46,6 +47,7 @@ import { AuthInterceptor } from './Services/Auth/auth.interceptor';
     SerafinsHomeComponent,
     MoviesComponent,
     MovieReviewsComponent,
+    ReviewsFeedComponent,
     ComentariosDialogComponent  
   ],
   imports: [

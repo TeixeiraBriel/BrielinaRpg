@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { MovieItem } from 'src/app/Interfaces/MovieItem';
-import { MovieReviewDto, ReviewUpsertResult } from 'src/app/Interfaces/MovieReviewDto';
+import { MovieReviewDto, ReviewFeedItem, ReviewUpsertResult } from 'src/app/Interfaces/MovieReviewDto';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,34 @@ export class MoviesService {
 
   getReviewsByUser(usuarioId: number): Observable<MovieReviewDto[]> {
     return this.http.get<MovieReviewDto[]>(`${this.baseUrl}/reviews/usuario/${usuarioId}`);
+  }
+
+  getAllReviewsFeed(): Observable<ReviewFeedItem[]> {
+    return this.getAll().pipe(
+      switchMap(movies => {
+        if (!movies.length) {
+          return of([]);
+        }
+
+        return forkJoin(
+          movies.map(movie =>
+            this.getReviewsByMovie(movie.id).pipe(
+              map(reviews =>
+                reviews.map(review => ({
+                  id: review.id,
+                  movieId: movie.id,
+                  movieTitle: movie.title,
+                  rating: review.rating,
+                  review: review.review,
+                  recommended: review.recommended,
+                  userName: review.userName
+                }))
+              )
+            )
+          )
+        ).pipe(map(reviewGroups => reviewGroups.flat()));
+      })
+    );
   }
 
   getReviewsByMovie(movieId: number): Observable<MovieReviewDto[]> {
